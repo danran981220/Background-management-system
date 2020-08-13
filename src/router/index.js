@@ -7,6 +7,8 @@ import users from '../components/users/Users.vue'
 import power from '../components/power/Power.vue'
 import rules from '../components/rules/Rules.vue'
 import goods from '../components/goods/Goods.vue'
+import categories from '../components/categories/Categories.vue'
+import params from '../components/params/Params.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -43,6 +45,14 @@ const router = new VueRouter({
         {
           path:'/goods',
           component:goods
+        },
+        {
+          path:'/categories',
+          component:categories
+        },
+        {
+          path:'/params',
+          component:params
         }
       ]
     }
