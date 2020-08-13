@@ -31,7 +31,7 @@ export default {
         pagesize:5
       },
       //信息条数，为了实现分页效果
-      total:''
+      total:'',
     }
   },
   created(){
