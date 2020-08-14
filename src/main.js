@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './plugins/element.js'
 import './assets/css/global.css'
+import treetable from 'vue-table-with-tree-grid'
 //导入axios,挂在axios
 import axios from 'axios'
 //设置根路径
@@ -16,6 +17,9 @@ Vue.prototype.$http=axios
 
 
 Vue.config.productionTip = false
+
+
+Vue.component('tree-table', treetable)
 
 new Vue({
   router,
