@@ -38,7 +38,7 @@
           <el-button type="primary" size="mini">
             <i class="el-icon-edit"></i>添加
           </el-button>
-          <el-button type="danger" size="mini">
+          <el-button type="danger" size="mini" @click="open(scoop.row)">
             <i class="el-icon-delete"></i>删除
           </el-button>
         </template>
@@ -198,7 +198,27 @@ export default {
         cat_level: 0,
       },
       this.Additem=false
-    }
+    },
+    open(scoop) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          const {data:res}=await this.$http.delete(`categories/${scoop.cat_id}`)
+          if(res.meta.status != 200){
+            this.$message.error('删除失败')
+          }else{
+            this.$message.success('删除成功')
+            this.getcatelist()
+          }
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+      }
   },
 }
 </script>

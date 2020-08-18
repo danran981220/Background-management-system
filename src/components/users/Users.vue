@@ -407,6 +407,11 @@ export default {
       this.userpi={}
     }
   },
+  // 组件内的钩子函数，在离开时触发
+  beforeRouteLeave(to,from,next){
+    console.log('nihao')
+    next()
+  }
 }
 </script>
 <style scoped lang="less">

@@ -28,11 +28,11 @@ const router = new VueRouter({
       children:[
         {
           path:'/welcome',
-          component:welcome,
+          component:welcome,    
         },
         {
           path:'/users',
-          component:users
+          component:users,
         },
         {
           path:'/rights',
