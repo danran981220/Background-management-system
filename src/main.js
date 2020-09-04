@@ -21,6 +21,19 @@ Vue.config.productionTip = false
 
 Vue.component('tree-table', treetable)
 
+//注册一个全局的过滤器，转化时间戳
+Vue.filter('conversion',function(timestamp){
+  const dt=new Date(timestamp)
+  const Y=dt.getFullYear()
+  // 得到的月份加一，变成真实月份，然后转化成字符串，如果为一位数，则开头加上‘0’
+  const M=(dt.getMonth()+1+'').padStart(2,'0')
+  const D=(dt.getDay()+1+'').padStart(2,'0')
+  const HH=(dt.getHours()+1+'').padStart(2,'0')
+  const MM=(dt.getMinutes()+1+'').padStart(2,'0')
+  const SS=(dt.getSeconds()+1+'').padStart(2,'0')
+  return `${Y}-${M}-${D} ${HH}:${MM}:${SS}`
+})
+
 new Vue({
   router,
   render: h => h(App)

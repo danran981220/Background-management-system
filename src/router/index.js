@@ -9,6 +9,7 @@ import rules from '../components/rules/Rules.vue'
 import goods from '../components/goods/Goods.vue'
 import categories from '../components/categories/Categories.vue'
 import params from '../components/params/Params.vue'
+import addshop from '../components/goods/Addshop.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -53,6 +54,9 @@ const router = new VueRouter({
         {
           path:'/params',
           component:params
+        },{
+          path:'/goods/add',
+          component:addshop
         }
       ]
     }
