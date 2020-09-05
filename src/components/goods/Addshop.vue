@@ -93,7 +93,12 @@
               <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
             </el-upload>
           </el-tab-pane>
-          <el-tab-pane label="商品内容" name="4">商品内容</el-tab-pane>
+          <el-tab-pane label="商品内容" name="4">
+            <quill-editor v-model="addForm.goods_introduce">
+
+            </quill-editor>
+            <el-button type="primary" @click="addjieshao">添加</el-button>
+          </el-tab-pane>
         </el-tabs>
       </el-form>
     </el-card>
@@ -118,6 +123,8 @@ export default {
         goods_number: null,
         goods_cat: [],
         pics: [],
+        goods_introduce:'',
+        attrs:[]
       },
       addrules: {
         goods_name: [
@@ -192,7 +199,7 @@ export default {
         } else {
           res.data.forEach((item) => {
             item.attr_vals =
-              item.attr_vals.length === 0 ? [] : item.attr_vals.split(',')
+              item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
           })
           this.manycate = res.data
         }
@@ -209,20 +216,17 @@ export default {
           this.$message.error('获取失败')
         } else {
           this.onlycate = res.data
-          console.log(this.onlycate)
         }
       }
     },
     //设置预览操作
     handlePreview(file) {
-      console.log(file)
       this.preview = file.response.data.url
       this.dialogVisible=true
     },
     //设置请求成功后的回调函数
     handlesuccess(response) {
       this.addForm.pics.push(response.data.tmp_path)
-      console.log(this.addForm.pics)
     },
     //设置移除后的回调函数
     handleRemove(file) {
@@ -234,6 +238,43 @@ export default {
       })
       this.addForm.pics.splice(i, 1)
     },
+    //设置添加按钮点击函数
+    addjieshao(){
+      this.$refs.ruleForm.validate(async valid=>{
+        if(!valid){
+          this.$message.error('请填入完整的信息')
+        }else{
+          const form=JSON.parse(JSON.stringify(this.addForm))
+          //设置动态参数
+          this.manycate.forEach(item=>{
+            const newinfo={
+              attr_id:item.attr_id,
+              attr_value:item.attr_vals.join(' ')
+            }
+            this.addForm.attrs.push(newinfo)
+          })
+          //设置静态参数
+          this.onlycate.forEach(item=>{
+            const newinfo={
+              attr_id:item.attr_id,
+              attr_value:item.attr_vals
+            }
+            this.addForm.attrs.push(newinfo)
+          })
+          form.attrs=this.addForm.attrs
+          console.log(form)
+          const {data:res}=await this.$http.post('goods',form)
+          if(res.meta.status!=201){
+            this.$message.error('添加失败')
+            console.log(res)
+            this.$router.push('/goods')
+          }else{
+            this.$message.success('添加成功')
+            console.log(res)
+          }
+        }
+      })
+    }
   },
   computed: {
     //设置过滤器
@@ -258,4 +299,5 @@ export default {
 .previewimg{
   width: 100%;
 }
+.el-button{margin-top: 20px;}
 </style>

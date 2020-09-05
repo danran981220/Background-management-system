@@ -4,3 +4,4 @@ html,body,#app{margin: 0;padding: 0;height: 100%;}
 .el-table{margin-top: 20px;font-size: 12px;}
 .el-cascader-menu{height: 250px;}
 .el-step__title{font-size: 13px;}
+.ql-editor{min-height: 300px !important;}
